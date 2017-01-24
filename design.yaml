@@ -1,0 +1,46 @@
+year: 2017
+linecolor:
+  - 0
+  - 0
+  - 0
+textcolor:
+  - 0
+  - 0
+  - 0
+
+weekendcolor:
+  - 150
+  - 255
+  - 150
+
+holydaycolor:
+  - 255
+  - 150
+  - 150
+
+monthnames:
+  - "Januarie"
+  - "Februarie"
+  - "Maart"
+  - "April"
+  - "Mei"
+  - "Juni"
+  - "Juli"
+  - "Augustus"
+  - "September"
+  - "Oktober"
+  - "November"
+  - "December"
+
+weekdaynames:
+  - "Zondag"
+  - "Maandag"
+  - "Dinsdag"
+  - "Woensdag"
+  - "Donderdag"
+  - "Vrijdag"
+  - "Zaterdag"
+
+headerheight: 40
+footerheight: 60
+linewidth: 5

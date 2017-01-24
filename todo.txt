@@ -1,0 +1,8 @@
+todo:
+
+titel bovenaan
+kleur achtergrond juiste dims
+kleurblok achtergrond verloop
+spitsen a3 achtergrond en voorgrond
+columnheight koppelen aan onderverdeling per cell qua afmetingen
+meer params omzetten naar de yaml
