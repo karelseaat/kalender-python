@@ -13,34 +13,38 @@ class Kalender:
 	linecolor = (0,0,0)
 	textcolor = (0,0,0)
 	linewidth = 1
-	colwidth = 50
+	colwidth = 59.33
 	colheight = 355
 	footerheight = 40
 	lineheight = 11.3
 	headerheight = 40
 	colhormarginn = 5
-	daytexttype = "meh-font"
-	daytextsize = 10
 	year = 2017
 	weekendcolor = {0:(150,255,150),6:(150,255,150)}
 	holydaycolor = (255,150,150)
 	headerpictures = [("name", 10),("more-name",10)]
 	footerpictures = []
-	monthtexttype = "font-type"
 	monthtextsize = 10
-	footertexts = ["sometext","anotherline of text"]
+	headertextsize = 10
+	footertextsize = 4
+	headertexttype = "Courier New"
+	footertexttype = "Courier New"
+	totalwidth = 0
+	totalheight = 0
+
 	headertexts = []
 	headerlogo = ("name", 10)
 	weekdaynames = ["Zo","Ma", "Di", "Wo", "Do", "Vr","Za"]
 	monthnames = ["Jan", "Feb", "Mrt", "Apr", "Mei", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
 	calendartitle = "Test title"
 	
-	footertexts = [["Aap:", "Noot:", "Mies:"], [], [],[], [], [], [], ["iets", "nog iets", "testings"]]
-	imagesfooter = ["Nature/Yellow Rapeseed Field/shutterstock_76386769.jpg","","","","","","",""]
-	imagesheader = ["Nature/BeautifulSunset/shutterstock_18465994.jpg","","","","",""]
+	headertexts = [["noot","aap","koei"],["nog iets", "en dan nog"],[],[],[],[],[],[],[],[],[],[],[],[]]
+	footertexts = [["Aap:", "Noot:", "Mies:"], ["test if empty","image thing"], [],[], [], [], [], ["iets", "nog iets", "testings"],[],[],[],[],[]]
+	imagesfooter = ["Nature/Yellow Rapeseed Field/shutterstock_76386769.jpg","","","","","","","","","","",""]
+	imagesheader = ["Nature/BeautifulSunset/shutterstock_18465994.jpg","","","","","","","","","","","",""]
 
 	schoolvacations = [(2,18),(2,19),(2,20),(2,21),(2,22),(2,23),(2,24),(2,25),(2,26),(5,22),(5,23),(5,24),(5,25),(5,26),(5,27),(5,28),(5,29),(5,30)]
-	holydays = []
+	holydays = [(3,24),(3,25),(3,26)]
 
 
 
@@ -50,16 +54,29 @@ class Kalender:
 		self.textcolor = tuple(allvars['textcolor'])
 		self.linecolor = tuple(allvars['linecolor'])
 		self.monthnames = allvars['monthnames']
-		self.year = 2017
+		self.year = allvars['year']
 		self.weekdaynames = allvars['weekdaynames']
 		self.weekendcolor = allvars['weekendcolor']
 		self.colheight = allvars['colheight']
+		self.colhormarginn = allvars['colhormarginn']
 		self.holydaycolor = allvars['holydaycolor']
+		self.schoolvacationscolor = allvars['schoolvacationscolor']
 		self.headerheight = allvars['headerheight']
 		self.headerheight = allvars['headerheight']
 		self.calendarfoottext = allvars['calendarfoottext']
 		self.linewidth = allvars['linewidth']
+		self.fontsizecol = allvars['fontsizecol']
+		self.fonttypecol = allvars['fonttypecol']
+		self.fonttypemodify = allvars['fonttypemodify']
+		self.fonttypecolweekend = allvars['fonttypecolweekend']
 		self.calendartitle = allvars['calendartitle']
+
+		self.headertextsize = allvars['headertextsize']
+		self.footertextsize = allvars['footertextsize']
+		self.headertexttype = allvars['headertexttype']
+		self.footertexttype = allvars['footertexttype']
+		# self.schoolvacations = allvars['schoolvacations']
+		# self.holydays = allvars['holydays']
 		self.dwg1 = svgwrite.Drawing('test-front.svg', profile='full')
 		self.dwg2 = svgwrite.Drawing('test-back.svg', profile='full')
 
@@ -95,10 +112,10 @@ class Kalender:
 
 		return temp
 
-	def makefooter(self, months, drawing):
+	def makefooter(self, months, drawing, startnum):
 		possi = 5
 		counter = 1
-		indexcounter = 0
+		indexcounter = startnum
 		for monthkey, monthvalue in months.items():
 
 			if counter % 3 == 0:
@@ -125,43 +142,63 @@ class Kalender:
 
 		if image is not "":
 			imgobj = drawing.image(image , (possi, self.colheight + 10), (self.colwidth ,self.footerheight))
+			# print dir(imgobj)
+			print imgobj.attribs
 			imgobj.stretch()
 			drawing.add(imgobj)
+
+		if image is "" and len(texts) > 0:
+			drawing.add(svgwrite.shapes.Rect((possi, self.colheight + 10), (self.colwidth ,self.footerheight), fill="white"))
 		
 		footersquare = svgwrite.shapes.Rect((possi, self.colheight + 10), (self.colwidth ,self.footerheight), stroke=self.tupcolortostring(self.linecolor))
+
 		drawing.add(footersquare)
 		footersquare.fill('white', opacity=0.0)
 		height = 0
+
+		
 
 		text_style = "font-size:%ipx; font-family:%s" % (6, "Courier New") 
 		for text in texts:
 			drawing.add(self.dwg1.text(text , insert=(possi + 2, self.colheight + 16 + height), fill=self.tupcolortostring(self.textcolor), style=text_style))
 			height += 6
 
-	def makeheader(self, months, drawing):
+	def makeheader(self, months, drawing, startnum):
 		possi = 0
 		counter = 0
-		indexcounter = 0
+		indexcounter = startnum
+
 		for monthkey, monthvalue in months.items():
+			
+			# print monthvalue
+			# print months.items().index((monthkey, monthvalue)), monthkey
 			if counter % 3 == 0:
 				possi += self.colhormarginn
-			self.makeheadersquare(possi,self.imagesheader[indexcounter], drawing)
-			indexcounter += 1
-			# self.makeheadersquare(possi,image, drawing)
 
+			self.makeheadersquare(possi,self.imagesheader[indexcounter], drawing, self.headertexts[indexcounter])
+			indexcounter += 1
 			counter += 1
 			possi += self.colwidth + self.colhormarginn
 
-	def makeheadersquare(self, possi,image, drawing):
+	def makeheadersquare(self, possi,image, drawing, texts):
 		
 		if image is not "":
 			imgobj = drawing.image(image , (possi, -(self.headerheight + 10)), (self.colwidth ,self.footerheight))
 			imgobj.stretch()
 			drawing.add(imgobj)
 
+		if image is "" and len(texts) > 0:
+			drawing.add(svgwrite.shapes.Rect((possi, -(self.headerheight + 10)), (self.colwidth ,self.footerheight), fill="white"))
+
 		headersquare = svgwrite.shapes.Rect((possi, -(self.headerheight + 10)), (self.colwidth, self.headerheight), stroke=self.tupcolortostring(self.linecolor))
 		drawing.add(headersquare)
 		headersquare.fill('white', opacity=0.0)
+
+		height = 0
+		text_style = "font-size:%ipx; font-family:%s" % (6, "Courier New") 
+		for text in texts:
+			drawing.add(self.dwg1.text(text , insert=(possi + 2, -(self.headerheight + 4) + height), fill=self.tupcolortostring(self.textcolor), style=text_style))
+			height += 6
 
 	def addBGgradient(self):
 		diagonal_gradient = self.dwg1.linearGradient(self.background['startpos'], self.background['endpos'])
@@ -178,16 +215,16 @@ class Kalender:
 		monthcount = len(self.makeittree( self.months_first(self.year))[self.year])
 		backgroundwidth = ((self.colwidth + self.colhormarginn) * monthcount + (2 * self.colhormarginn))
 
-		self.dwg1.add(svgwrite.shapes.Rect((self.colhormarginn, -(self.headerheight + self.colhormarginn + 2)), (backgroundwidth, self.colheight + self.footerheight + self.headerheight + 50 ), fill=self.addBGgradient()))
+		self.dwg1.add(svgwrite.shapes.Rect((self.colhormarginn-5, -(self.headerheight + self.colhormarginn + 26)), (backgroundwidth, self.colheight + self.footerheight + self.headerheight + 50 ), fill=self.addBGgradient()))
 
-		self.dwg2.add(svgwrite.shapes.Rect((self.colhormarginn, -(self.headerheight + self.colhormarginn + 2)), (backgroundwidth, self.colheight + self.footerheight + self.headerheight + 50 ), fill=self.addBGgradient()))
+		self.dwg2.add(svgwrite.shapes.Rect((self.colhormarginn-5, -(self.headerheight + self.colhormarginn + 26)), (backgroundwidth, self.colheight + self.footerheight + self.headerheight + 50 ), fill=self.addBGgradient()))
 
-		text_style = "font-size:%ipx; font-family:%s" % (10, "Courier New") 
+		text_style = "font-size:%ipx; font-family:%s" % (self.headertextsize, self.headertexttype) 
 		headertext = self.dwg1.text(self.calendartitle , insert=(self.colhormarginn, -60), fill=self.tupcolortostring(self.textcolor), style=text_style)
 		self.dwg1.add(headertext)
 		self.dwg2.add(headertext)
 
-		text_style = "font-size:%ipx; font-family:%s" % (5, "Courier New") 
+		text_style = "font-size:%ipx; font-family:%s" % (self.footertextsize, self.footertexttype) 
 		footertexr = self.dwg1.text(self.calendarfoottext , insert=(self.colhormarginn, self.colheight + self.footerheight + self.headerheight - 25), fill=self.tupcolortostring(self.textcolor), style=text_style)
 		self.dwg1.add(footertexr)
 		self.dwg2.add(footertexr)
@@ -202,9 +239,12 @@ class Kalender:
 				self.makecolumn(monthvalue['name'], monthvalue['days'], possi, self.dwg2)
 				counter += 1
 				possi += self.colwidth + self.colhormarginn
-			
-			self.makeheader(yearvalue, self.dwg2)
-			self.makefooter(yearvalue, self.dwg2)
+				self.totalwidth += self.colwidth + self.colhormarginn
+
+			self.makeheader(yearvalue, self.dwg2, 0)
+			self.makefooter(yearvalue, self.dwg2, 0)
+
+		self.totalheight += self.colheight
 
 		possi = 0
 		counter = 0
@@ -217,13 +257,14 @@ class Kalender:
 				counter += 1
 				possi += self.colwidth + self.colhormarginn
 			
-			self.makeheader(yearvalue, self.dwg1)
-			self.makefooter(yearvalue, self.dwg1)
+			self.makeheader(yearvalue, self.dwg1, 0)
+			self.makefooter(yearvalue, self.dwg1, 0)
 			
 
 		self.dwg1.save()
 		self.dwg2.save()
 
+		print "totwidth:" + str(self.totalwidth) + " totheight:" + str(self.totalheight) + " ratio:" + str(self.totalwidth / self.totalheight)
 		
 
 	def makecolumn(self, monthindex, days, position, drawing):
@@ -231,7 +272,7 @@ class Kalender:
 
 		text_style = "font-size:%ipx; font-family:%s" % (5, "Courier New") 
 
-		drawing.add(drawing.text(self.monthnames[monthindex-1], insert=(position, -3), fill=self.tupcolortostring(self.textcolor), style=text_style))
+		drawing.add(drawing.text( self.monthnames[monthindex-1] + "  " +str(self.year), insert=(position, -3), fill=self.tupcolortostring(self.textcolor), style=text_style))
 		
 		possi = 0
 
@@ -243,30 +284,30 @@ class Kalender:
 			
 			if (daysvalue in [0,6]):
 				drawing.add(svgwrite.shapes.Rect((position, possi), (self.colwidth,self.lineheight), fill=self.tupcolortostring(self.weekendcolor[daysvalue])))
-			
 			possi += self.lineheight
 
-			# if (monthindex, dayskey) in self.schoolvacations:
-			# 	self.dwg1.add(svgwrite.shapes.Rect((position + ((self.colwidth/5)*4), possi), (self.colwidth/5,self.lineheight), fill=self.tupcolortostring(self.holydaycolor)))
-
-			
-
-			text_style = "font-size:%ipx; font-family:%s" % (4, "Courier New") 
-			drawing.add(drawing.text(self.weekdaynames[daysvalue] + " " + str(dayskey) , insert=(position + 3, possi - 3), fill=self.tupcolortostring(self.textcolor), style=text_style))
+			if (daysvalue not in [0,6]):
+				text_style = "font-size:%ipx; font-family:%s" % (self.fontsizecol, self.fonttypecol)
+			else:
+				text_style = "font-size:%ipx; font-family:%s; font-weight: bold;" % (self.fontsizecol, self.fonttypecol)
+			drawing.add(drawing.text(self.weekdaynames[daysvalue] + " " + str(dayskey) , insert=(position + 3, possi - (self.lineheight/float(2.6))), fill=self.tupcolortostring(self.textcolor), style=text_style))
 		 	
+		possi = 0
+		for dayskey, daysvalue in days.items():
+			possi += self.lineheight
 
+			if (monthindex, dayskey) in self.schoolvacations:
+				drawing.add(svgwrite.shapes.Rect((position + ((self.colwidth/5)*4), possi), (self.colwidth/5,self.lineheight), fill=self.tupcolortostring(self.schoolvacationscolor)))
+
+			if (monthindex, dayskey) in self.holydays:
+				drawing.add(svgwrite.shapes.Rect((position + ((self.colwidth/5)*4), possi), (self.colwidth/5,self.lineheight), fill=self.tupcolortostring(self.holydaycolor)))
 
 		possi = 0
 		for dayskey, daysvalue in days.items()[:-1]:
 			possi += self.lineheight
 			drawing.add(drawing.line((position, possi),(self.colwidth + position, possi), stroke=self.tupcolortostring(self.linecolor)))
 
-		possi = 0
-		for dayskey, daysvalue in days.items():
-			possi += self.lineheight
-
-			if (monthindex, dayskey) in self.schoolvacations:
-				drawing.add(svgwrite.shapes.Rect((position + ((self.colwidth/5)*4), possi), (self.colwidth/5,self.lineheight), fill=self.tupcolortostring(self.holydaycolor)))
+	
 
 		somecolumn = svgwrite.shapes.Rect((position, 0), (self.colwidth,self.colheight), stroke=self.tupcolortostring(self.linecolor))
 		drawing.add(somecolumn)

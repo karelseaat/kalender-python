@@ -1,17 +1,33 @@
 todo:
 
-kalender opdelen in 2 plaatjes, voorkant en acterkant, bijde a3 afmeting (doneish)
+
 textje voor de bodem, klein letter type (done)
 titel kalender boven hoort bij de kleuren, erin vallen.
 plaatjes header blokken (done)
 dikke blokken onder aan naar blokken van een column breed (done)
 footertexten in de yaml (done)
 column hoogte in de yaml (done)
+jaar nummer bij de maand in, achter maand (done)
+fonttype ook variable en in de yaml #  (done)
+font size variabel in de yaml # (done)
+weekend font size variabel en in de yaml # (done)
+jaar in de yaml # (done)
+column margin ook in de yaml # (done)
 
-weekend font size variabel en in de yaml
-jaar in de yaml
-jaar nummer bij de maand in, achter maand
-feestdagen/schoolvakanties/holydays mag in de yaml
-column margin ook in de yaml
+imagefooter en header in de yaml
+als geen text en geen plaatje in flakje dan plaatje van niet parkeren op witte achtergrond (done)
+feestdagen/schoolvakanties/holydays mag in de yaml # (nog niet helemaal done)
+kalender opdelen in 2 plaatjes, voorkant en acterkant, bijde a3 afmeting (done)
+dik drukken van de weekenden en niet groter letter type (done)
+kleur achtergrond nu echter goed positioneren. ( done)
+alle letter types en font sizes in de yaml (deels)
+verticale margin tussen de header en col en footer en col in de yaml (todo)
+texten mogelijkheid voor header flakjes (done)
+als geen plaatje in een vlakje en wel text dan altijd wit maken (done)
+
+alle items die er in gaan attribs pakken en laten returnen voor latere width total en height totaal berekening
+locatie voor een logotje
+kijken naar de mogelijkheid voor een soort watermerk
 ff nadenken over schalen van plaatjes !
-kan ik al een code inbauwen dmv col line variatie
+opschonen van de programatuur
+kan ik al een code inbauwen dmv col line variatie !

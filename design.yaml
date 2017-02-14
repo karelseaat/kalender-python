@@ -1,4 +1,4 @@
-year: 2017
+year: 2018
 linecolor:
   - 0
   - 0
@@ -8,13 +8,20 @@ textcolor:
   - 0
   - 0
 
-colheight: 200
+fontsizecol: 4
+fonttypecol: "Courier New"
+
+fonttypemodify: 5
+fonttypecolweekend: "Courier New"
+
+colheight: 150
+colhormarginn: 5
 
 weekendcolor:
   0:
+    - 255
     - 150
-    - 0
-    - 150
+    - 255
   6:
     - 150
     - 255
@@ -23,6 +30,11 @@ weekendcolor:
 holydaycolor:
   - 255
   - 150
+  - 150
+
+schoolvacationscolor:
+  - 150
+  - 255
   - 150
 
 monthnames:
@@ -40,20 +52,20 @@ monthnames:
   - "December"
 
 weekdaynames:
-  - "Zondag"
-  - "Maandag"
-  - "Dinsdag"
-  - "Woensdag"
-  - "Donderdag"
-  - "Vrijdag"
-  - "Zaterdag"
+  - "Zo"
+  - "Ma"
+  - "Di"
+  - "Wo"
+  - "Do"
+  - "Vr"
+  - "Za"
 
 headerheight: 40
 footerheight: 60
 linewidth: 5
 
 calendartitle: "Kalender voor school, notie's en verjaardagen. "
-calendarfoottext: "Kalender, Ontwerp en druk. Erat Enschede. Nadruk verboden !"
+calendarfoottext: "Kalender, Ontwerp en druk. ERAT Enschede. Nadruk verboden !"
 background:
   startpos:
     - 0
@@ -69,3 +81,34 @@ background:
     - 255
     - 20
     - 0
+
+schoolvacations:
+    - 2,18
+    - (2,19)
+    - (2,20)
+    - (2,21)
+    - (2,22)
+    - (2,23)
+    - (2,24)
+    - (2,25)
+    - (2,26)
+    - (5,22)
+    - (5,23)
+    - (5,24)
+    - (5,25)
+    - (5,26)
+    - (5,27)
+    - (5,28)
+    - (5,29)
+    - (5,30)
+
+holydays:
+  - 4,5
+  - 4,6
+  - 4,7
+  - 4,8
+
+headertextsize: 10
+footertextsize: 6
+headertexttype: "Courier New"
+footertexttype: "Courier New"
